@@ -1,5 +1,3 @@
 #include "flow.h"
 
-float getFlowRate() {
-    return 0.0;
-}
+uint8_t getFlowRate() { return rand() % 256; }

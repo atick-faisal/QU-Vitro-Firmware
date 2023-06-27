@@ -1,6 +1,6 @@
 #include "pump.h"
 
-static uint8_t getCorrectedMotorSpeed(uint8_t targetFlow, float currentFlow) {
+static uint8_t getCorrectedMotorSpeed(uint8_t targetFlow, uint8_t currentFlow) {
     // ... Implement PID control here
     uint8_t correctedSpeed = targetFlow;
     return correctedSpeed;
@@ -15,8 +15,9 @@ void controlPump() {
     for (uint8_t i = 0; i < N_FLOW_POINTS; i++) {
         unsigned long waitUntil = millis() + PAUSE_BETWEEN_STEPS;
 
-        float flowRate = getFlowRate();
-        uint8_t motorSpeed = getCorrectedMotorSpeed(flowProfile[i], flowRate);
+        flowRates[i] = getFlowRate();
+        uint8_t motorSpeed =
+            getCorrectedMotorSpeed(flowProfile[i], flowRates[i]);
         analogWrite(MOTOR_PIN, motorSpeed);
 
         // ... Check for serial data
@@ -31,4 +32,5 @@ void controlPump() {
             delay(1);
         }
     }
+    writeFlowRates(flowRates);
 }

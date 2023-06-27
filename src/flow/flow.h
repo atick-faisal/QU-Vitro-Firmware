@@ -1,6 +1,8 @@
 #ifndef FLOW_H
 #define FLOW_H
 
-float getFlowRate();
+#include "../config/config.h"
+
+uint8_t getFlowRate();
 
 #endif

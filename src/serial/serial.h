@@ -11,6 +11,6 @@ extern uint8_t flowProfile[N_FLOW_POINTS];
 
 void initializeSerial();
 void readFlowProfile();
-void writeFlowProfile();
+void writeFlowRates(uint8_t *flowRates);
 
 #endif
