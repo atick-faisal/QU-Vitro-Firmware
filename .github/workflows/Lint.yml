@@ -13,9 +13,6 @@ jobs:
     - name: Install clang-format (for C/C++)
       run: sudo apt-get install clang-format
 
-    - name: Install cppcheck (for C/C++)
-      run: sudo apt-get install cppcheck
-
     - name: Check C and C++ files with clang-format
       run: |
         bash clang_format.sh

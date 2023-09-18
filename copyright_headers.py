@@ -56,7 +56,7 @@ header_done = False
 while line.strip() == "":  # Skip empty lines at the top
     line = fileread.readline()
 
-if line.find("/**********") == -1:  # Godot header starts this way
+if line.find("// Copyright 2023 Atick Faisal") == -1:  # Godot header starts this way
     # Maybe starting with a non-Godot comment, abort header magic
     header_done = True
 
