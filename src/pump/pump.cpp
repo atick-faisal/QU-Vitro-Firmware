@@ -18,7 +18,12 @@ void controlPump() {
         flowRates[i] = getFlowRate();
         uint8_t motorSpeed =
             getCorrectedMotorSpeed(flowProfile[i], flowRates[i]);
+
+#ifdef PWM_MODE_ARDUINO
         analogWrite(MOTOR_PIN, motorSpeed);
+#elif defined(PWM_MODE_ESP32)
+        ledcWrite(PWM_CHANNEL, motorSpeed);
+#endif
 
         // ... Check for serial data
         while (millis() < waitUntil) {

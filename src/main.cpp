@@ -5,7 +5,7 @@
 bool readMode = false;
 
 void setup() {
-    initializeUtils();
+    initializePins();
     initializePump();
     initializeSerial();
 }

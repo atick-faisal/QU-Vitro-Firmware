@@ -3,8 +3,14 @@
 
 #include <Arduino.h>
 
+#define PWM_MODE_ESP32
+
 // ... Peristaltic pump motor pin
+#ifdef PWM_MODE_ARDUINO
 const uint8_t MOTOR_PIN = 10;
+#elif defined(PWM_MODE_ESP32)
+const uint8_t MOTOR_PIN = 16;
+#endif
 
 // ... Buffer size for reading and writing flow profile
 const uint8_t BUFFER_SIZE = 255;
@@ -22,5 +28,11 @@ const uint16_t PAUSE_BETWEEN_STEPS = (uint16_t)(FLOW_PERIOD / N_FLOW_POINTS);
 // ... e.g. <0,1,4,...,255,....>
 const char FLOW_PROFILE_START_FLAG = '<';
 const char FLOW_PROFILE_END_FLAG = '>';
+
+#ifdef ESP32
+const uint8_t PWM_CHANNEL = 1;
+const double PWM_FREQUENCY = 5000;
+const uint8_t PWM_RESOLUTION = 8;
+#endif
 
 #endif

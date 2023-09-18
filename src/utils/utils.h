@@ -4,7 +4,7 @@
 #include "../config/config.h"
 
 void blink();
-void initializeUtils();
+void initializePins();
 void initializeFlowProfile();
 
 #endif

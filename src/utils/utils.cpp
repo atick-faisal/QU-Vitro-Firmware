@@ -12,8 +12,14 @@ void blink() {
     }
 }
 
-void initializeUtils() {
+void initializePins() {
     pinMode(LED_BUILTIN, OUTPUT);
+    
+#ifdef PWM_MODE_ESP32
+    // Setup PWM for ESP32
+    ledcSetup(PWM_CHANNEL, PWM_FREQUENCY, PWM_RESOLUTION);
+    ledcAttachPin(MOTOR_PIN, PWM_CHANNEL);
+#endif
 }
 
 static uint8_t getSpeed(uint8_t step, uint8_t n_steps) {
