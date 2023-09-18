@@ -22,8 +22,5 @@ jobs:
           python-version: 3.11
           cache: pip
 
-      - name: Install PlatformIO Core
-        run: pip install -U platformio
-
       - name: Build PlatformIO project
         run: platformio run
