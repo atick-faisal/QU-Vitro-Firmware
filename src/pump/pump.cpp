@@ -43,7 +43,7 @@ void controlPump() {
     for (uint8_t i = 0; i < N_FLOW_POINTS; i++) {
         unsigned long waitUntil = millis() + PAUSE_BETWEEN_STEPS;
 
-        flowRates[i] = getFlowRate();
+        flowRates[i] = getFlowRate(i);
         uint8_t motorSpeed =
             getCorrectedMotorSpeed(flowProfile[i], flowRates[i]);
 

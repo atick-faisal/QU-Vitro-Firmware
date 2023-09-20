@@ -31,6 +31,8 @@
 
 #include "../config/config.h"
 
-uint8_t getFlowRate();
+extern uint8_t flowProfile[N_FLOW_POINTS];
+
+uint8_t getFlowRate(uint8_t i);
 
 #endif

@@ -28,4 +28,6 @@
 
 #include "flow.h"
 
-uint8_t getFlowRate() { return rand() % 256; }
+uint8_t getFlowRate(uint8_t i) {
+    return (uint8_t)abs(flowProfile[i] - rand() % 25);
+}

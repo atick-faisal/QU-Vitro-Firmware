@@ -29,14 +29,17 @@
 #include "serial.h"
 
 uint8_t count = 0;
-char buffer[BUFFER_SIZE];
+bool configMode = true;
+char flowBuffer[FLOW_BUFFER_SIZE];
+char configBuffer[CONFIG_BUFFER_SIZE];
+uint16_t flowConfig[2];
 
 static void serialize(uint8_t *array, size_t length) {
-    buffer[0] = '\0';
+    flowBuffer[0] = '\0';
     for (int i = 0; i < length; ++i) {
-        sprintf(buffer + strlen(buffer), "%d", array[i]);
+        sprintf(flowBuffer + strlen(flowBuffer), "%d", array[i]);
         if (i != length - 1) {
-            sprintf(buffer + strlen(buffer), ",");
+            sprintf(flowBuffer + strlen(flowBuffer), ",");
         }
     }
 }
@@ -46,6 +49,15 @@ static void deserialize(char *stream, uint8_t *values) {
     char *token = strtok(stream, ",");
     while (token != NULL) {
         values[idx++] = (uint8_t)atoi(token);
+        token = strtok(NULL, ",");
+    }
+}
+
+static void deserialize(char *stream, uint16_t *values) {
+    uint8_t idx = 0;
+    char *token = strtok(stream, ",");
+    while (token != NULL) {
+        values[idx++] = (uint16_t)atoi(token);
         token = strtok(NULL, ",");
     }
 }
@@ -60,18 +72,27 @@ void initializeSerial() {
 void readFlowProfile() {
     if (Serial.available() > 0) {
         char received = (char)Serial.read();
+        if (received == FLOW_CONFIG_END_CHAR) {
+            count = 0;
+            configMode = false;
+            deserialize(configBuffer, flowConfig);
+            return;
+        }
         if (received == FLOW_PROFILE_END_FLAG) {
-            deserialize(buffer, flowProfile);
+            deserialize(flowBuffer, flowProfile);
             readMode = false;
             count = 0;
             blink();
             return;
         }
-        buffer[count++] = received;
+        if (configMode)
+            configBuffer[count++] = received;
+        else
+            flowBuffer[count++] = received;
     }
 }
 
 void writeFlowRates(uint8_t *flowRates) {
     serialize(flowRates, N_FLOW_POINTS);
-    Serial.println(buffer);
+    Serial.println(flowBuffer);
 }
