@@ -29,10 +29,13 @@
 #ifndef FLOW_H
 #define FLOW_H
 
+#include <sensirion-lf.h>
+
 #include "../config/config.h"
 
 extern uint8_t flowProfile[N_FLOW_POINTS];
 
+uint8_t initializeFlowSensor();
 uint8_t getFlowRate(uint8_t i);
 
 #endif

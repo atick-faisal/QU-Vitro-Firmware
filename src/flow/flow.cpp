@@ -28,6 +28,27 @@
 
 #include "flow.h"
 
+float previousFlowRate = 0.0;
+
+uint8_t initializeFlowSensor() { return SLF3X.init(); }
+
 uint8_t getFlowRate(uint8_t i) {
-    return (uint8_t)abs(flowProfile[i] - rand() % 25);
+    // ... Random Value
+    // return (uint8_t)abs(flowProfile[i] - rand() % 25);
+
+    // ... Read Sensor
+    uint8_t sample = SLF3X.readSample();
+    if (sample == 0) {
+        float flowRate = SLF3X.getFlow();
+
+        // ... Filtering
+        flowRate = 0.95 * previousFlowRate + 0.05 * flowRate;
+        previousFlowRate = flowRate;
+
+        int8_t flowRateScaled =
+            (int8_t)(flowRate * (128.0 / MAX_FLOW_RATE));  // [-128, +128]
+        return (uint8_t)(flowRateScaled + 128);
+    } else {
+        return 0;
+    }
 }

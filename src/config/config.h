@@ -51,6 +51,9 @@ const uint8_t N_FLOW_POINTS = 50;
 // ... Duration of one flow profile in millisecond
 const uint16_t FLOW_PERIOD = 2000;
 
+// ... Max Flow Rate
+const uint8_t MAX_FLOW_RATE = 4;
+
 // ... Pause between each step
 const uint16_t PAUSE_BETWEEN_STEPS = (uint16_t)(FLOW_PERIOD / N_FLOW_POINTS);
 
