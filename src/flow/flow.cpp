@@ -38,17 +38,20 @@ uint8_t getFlowRate(uint8_t i) {
 
     // ... Read Sensor
     uint8_t sample = SLF3X.readSample();
-    if (sample == 0) {
-        float flowRate = SLF3X.getFlow();
+    if (sample != 0) return 0;
 
-        // ... Filtering
-        flowRate = 0.95 * previousFlowRate + 0.05 * flowRate;
-        previousFlowRate = flowRate;
+    float flowRate = SLF3X.getFlow();
 
-        int8_t flowRateScaled =
-            (int8_t)(flowRate * (128.0 / MAX_FLOW_RATE));  // [-128, +128]
-        return (uint8_t)(flowRateScaled + 128);
-    } else {
-        return 0;
-    }
+    // ... Clipping
+    if (flowRate > MAX_FLOW_RATE) flowRate = (float)MAX_FLOW_RATE;
+    if (flowRate < MIN_FLOW_RATE) flowRate = (float)MIN_FLOW_RATE;
+
+    // ... Filtering
+    flowRate = 0.5 * previousFlowRate + 0.5 * flowRate;
+    previousFlowRate = flowRate;
+
+    float flowRateScaled = (255.0 / FLOW_RANGE) *
+                           (flowRate + abs(MIN_FLOW_RATE));  // [-51.2, +204.8]
+
+    return (uint8_t)flowRateScaled;
 }

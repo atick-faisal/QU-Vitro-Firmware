@@ -52,7 +52,9 @@ const uint8_t N_FLOW_POINTS = 50;
 const uint16_t FLOW_PERIOD = 2000;
 
 // ... Max Flow Rate
-const uint8_t MAX_FLOW_RATE = 4;
+const int8_t MAX_FLOW_RATE = 8;
+const int8_t MIN_FLOW_RATE = -2;
+const int8_t FLOW_RANGE = MAX_FLOW_RATE - MIN_FLOW_RATE;
 
 // ... Pause between each step
 const uint16_t PAUSE_BETWEEN_STEPS = (uint16_t)(FLOW_PERIOD / N_FLOW_POINTS);
