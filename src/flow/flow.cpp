@@ -50,8 +50,8 @@ uint8_t getFlowRate(uint8_t i) {
     flowRate = 0.5 * previousFlowRate + 0.5 * flowRate;
     previousFlowRate = flowRate;
 
-    float flowRateScaled = (255.0 / FLOW_RANGE) *
-                           (flowRate + abs(MIN_FLOW_RATE));  // [-51.2, +204.8]
+    float flowRateScaled =
+        (255.0 / FLOW_RANGE) * (flowRate - MIN_FLOW_RATE);  // [-51.2, +204.8]
 
     return (uint8_t)flowRateScaled;
 }
