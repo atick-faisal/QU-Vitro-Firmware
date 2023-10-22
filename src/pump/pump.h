@@ -35,8 +35,8 @@
 #include "../utils/utils.h"
 
 extern bool readMode;
-extern uint8_t flowProfile[N_FLOW_POINTS];
-extern uint8_t flowRates[N_FLOW_POINTS];
+extern uint8_t targetFlowRate[N_FLOW_POINTS];
+extern uint8_t measuredFlowRate[N_FLOW_POINTS];
 
 enum PumpType { SYRINGE, PERILSTALTIC };
 

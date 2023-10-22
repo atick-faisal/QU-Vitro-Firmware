@@ -80,7 +80,7 @@ void readFlowProfile() {
             return;
         }
         if (received == FLOW_PROFILE_END_FLAG) {
-            deserialize(flowBuffer, flowProfile);
+            deserialize(flowBuffer, targetFlowRate);
             readMode = false;
             count = 0;
             blink();
@@ -93,7 +93,7 @@ void readFlowProfile() {
     }
 }
 
-void writeFlowRates(uint8_t *flowRates) {
-    serialize(flowRates, N_FLOW_POINTS);
+void writeFlowRates(uint8_t *measuredFlowRate) {
+    serialize(measuredFlowRate, N_FLOW_POINTS);
     Serial.println(flowBuffer);
 }

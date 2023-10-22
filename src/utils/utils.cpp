@@ -28,8 +28,8 @@
 
 #include "utils.h"
 
-uint8_t flowProfile[N_FLOW_POINTS];
-uint8_t flowRates[N_FLOW_POINTS];
+uint8_t targetFlowRate[N_FLOW_POINTS];
+uint8_t measuredFlowRate[N_FLOW_POINTS];
 
 void blink() {
     for (int i = 0; i < 10; i++) {
@@ -58,7 +58,7 @@ static uint8_t getSpeed(uint8_t step, uint8_t n_steps) {
 
 void initializeFlowProfile() {
     for (int i = 0; i < N_FLOW_POINTS; i++) {
-        flowProfile[i] = getSpeed(i, N_FLOW_POINTS);
-        flowRates[i] = 0;
+        targetFlowRate[i] = getSpeed(i, N_FLOW_POINTS);
+        measuredFlowRate[i] = 0;
     }
 }

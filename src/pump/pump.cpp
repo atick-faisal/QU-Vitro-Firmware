@@ -46,9 +46,9 @@ void controlPump() {
     Serial.println(pumpConfig.chipDiameter);
     for (uint8_t i = 0; i < N_FLOW_POINTS; i++) {
         unsigned long waitUntil = millis() + pauseBetweenSteps;
-        flowRates[i] = getFlowRate(i);
+        measuredFlowRate[i] = getFlowRate(i);
         uint8_t motorSpeed =
-            getCorrectedMotorSpeed(flowProfile[i], flowRates[i]);
+            getCorrectedMotorSpeed(targetFlowRate[i], measuredFlowRate[i]);
 
         if (pumpConfig.pumpType == PERILSTALTIC) {
 #ifdef PWM_MODE_ARDUINO
@@ -72,7 +72,7 @@ void controlPump() {
             delay(1);
         }
     }
-    writeFlowRates(flowRates);
+    writeFlowRates(measuredFlowRate);
 }
 
 void setPumpConfig(uint8_t pumpType, uint16_t flowPeriod,

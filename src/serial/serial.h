@@ -36,10 +36,10 @@
 const unsigned long BAUD_RATE = 115200;
 
 extern bool readMode;
-extern uint8_t flowProfile[N_FLOW_POINTS];
+extern uint8_t targetFlowRate[N_FLOW_POINTS];
 
 void initializeSerial();
 void readFlowProfile();
-void writeFlowRates(uint8_t *flowRates);
+void writeFlowRates(uint8_t *measuredFlowRate);
 
 #endif
