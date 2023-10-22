@@ -38,7 +38,17 @@ extern bool readMode;
 extern uint8_t flowProfile[N_FLOW_POINTS];
 extern uint8_t flowRates[N_FLOW_POINTS];
 
+enum PumpType { SYRINGE, PERILSTALTIC };
+
+struct PumpConfig {
+    PumpType pumpType;
+    uint16_t flowPeriod;
+    uint16_t chipDiameter;
+};
+
 void initializePump();
 void controlPump();
+void setPumpConfig(uint8_t pumpType, uint16_t flowPeriod,
+                   uint16_t chipDiameter);
 
 #endif

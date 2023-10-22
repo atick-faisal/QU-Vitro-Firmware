@@ -43,7 +43,7 @@ const uint8_t MOTOR_PIN = 16;
 // ... Buffer size for reading and writing flow profile
 const uint8_t FLOW_BUFFER_SIZE = 255;
 
-const uint8_t CONFIG_BUFFER_SIZE = 16;
+const uint8_t CONFIG_BUFFER_SIZE = 24;
 
 // ... Number of data-points in flow profile
 const uint8_t N_FLOW_POINTS = 50;
@@ -63,7 +63,7 @@ const uint16_t PAUSE_BETWEEN_STEPS = (uint16_t)(FLOW_PERIOD / N_FLOW_POINTS);
 // ... e.g. <pump_type,period|0,1,4,...,255,....>
 const char FLOW_PROFILE_START_FLAG = '<';
 const char FLOW_PROFILE_END_FLAG = '>';
-const char FLOW_CONFIG_END_CHAR = '|';
+const char PUMP_CONFIG_END_CHAR = '|';
 
 #ifdef ESP32
 const uint8_t PWM_CHANNEL = 1;

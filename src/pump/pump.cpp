@@ -28,6 +28,9 @@
 
 #include "pump.h"
 
+PumpConfig pumpConfig = PumpConfig{SYRINGE, 1000, 100};
+uint16_t pauseBetweenSteps = pumpConfig.flowPeriod / N_FLOW_POINTS;
+
 static uint8_t getCorrectedMotorSpeed(uint8_t targetFlow, uint8_t currentFlow) {
     // ... Implement PID control here
     uint8_t correctedSpeed = targetFlow;
@@ -40,18 +43,22 @@ void initializePump() {
 }
 
 void controlPump() {
+    Serial.println(pumpConfig.chipDiameter);
     for (uint8_t i = 0; i < N_FLOW_POINTS; i++) {
-        unsigned long waitUntil = millis() + PAUSE_BETWEEN_STEPS;
-
+        unsigned long waitUntil = millis() + pauseBetweenSteps;
         flowRates[i] = getFlowRate(i);
         uint8_t motorSpeed =
             getCorrectedMotorSpeed(flowProfile[i], flowRates[i]);
 
+        if (pumpConfig.pumpType == PERILSTALTIC) {
 #ifdef PWM_MODE_ARDUINO
-        analogWrite(MOTOR_PIN, motorSpeed);
+            analogWrite(MOTOR_PIN, motorSpeed);
 #elif defined(PWM_MODE_ESP32)
-        ledcWrite(PWM_CHANNEL, motorSpeed);
+            ledcWrite(PWM_CHANNEL, motorSpeed);
 #endif
+        } else if (pumpConfig.pumpType == SYRINGE) {
+            // TODO(Implement this)
+        }
 
         // ... Check for serial data
         while (millis() < waitUntil) {
@@ -66,4 +73,12 @@ void controlPump() {
         }
     }
     writeFlowRates(flowRates);
+}
+
+void setPumpConfig(uint8_t pumpType, uint16_t flowPeriod,
+                   uint16_t chipDiameter) {
+    pumpConfig.pumpType = pumpType == 0 ? SYRINGE : PERILSTALTIC;
+    pumpConfig.flowPeriod = flowPeriod;
+    pumpConfig.chipDiameter = chipDiameter;
+    pauseBetweenSteps = pumpConfig.flowPeriod / N_FLOW_POINTS;
 }

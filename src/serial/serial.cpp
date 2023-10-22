@@ -32,7 +32,7 @@ uint8_t count = 0;
 bool configMode = true;
 char flowBuffer[FLOW_BUFFER_SIZE];
 char configBuffer[CONFIG_BUFFER_SIZE];
-uint16_t flowConfig[2];
+static uint16_t pumpConfig[3];
 
 static void serialize(uint8_t *array, size_t length) {
     flowBuffer[0] = '\0';
@@ -72,10 +72,11 @@ void initializeSerial() {
 void readFlowProfile() {
     if (Serial.available() > 0) {
         char received = (char)Serial.read();
-        if (received == FLOW_CONFIG_END_CHAR) {
+        if (received == PUMP_CONFIG_END_CHAR) {
             count = 0;
             configMode = false;
-            deserialize(configBuffer, flowConfig);
+            deserialize(configBuffer, pumpConfig);
+            setPumpConfig(pumpConfig[0], pumpConfig[1], pumpConfig[2]);
             return;
         }
         if (received == FLOW_PROFILE_END_FLAG) {

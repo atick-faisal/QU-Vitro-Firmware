@@ -31,6 +31,7 @@
 
 #include "../config/config.h"
 #include "../utils/utils.h"
+#include "../pump/pump.h"
 
 const unsigned long BAUD_RATE = 115200;
 
