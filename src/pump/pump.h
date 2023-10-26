@@ -46,7 +46,6 @@ struct PumpConfig {
     uint16_t chipDiameter;
 };
 
-void initializePump();
 void controlPump();
 void setPumpConfig(uint8_t pumpType, uint16_t flowPeriod,
                    uint16_t chipDiameter);

@@ -34,7 +34,7 @@ uint8_t initializeFlowSensor() { return SLF3X.init(); }
 
 uint8_t getFlowRate(uint8_t i) {
     // ... Random Value
-    // return (uint8_t)abs(flowProfile[i] - rand() % 25);
+    // return (uint8_t)abs(targetFlowRate[i] - rand() % 25);
 
     // ... Read Sensor
     uint8_t sample = SLF3X.readSample();

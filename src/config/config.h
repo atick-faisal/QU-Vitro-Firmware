@@ -65,7 +65,7 @@ const char FLOW_PROFILE_START_FLAG = '<';
 const char FLOW_PROFILE_END_FLAG = '>';
 const char PUMP_CONFIG_END_CHAR = '|';
 
-#ifdef ESP32
+#ifdef PWM_MODE_ESP32
 const uint8_t PWM_CHANNEL = 1;
 const double PWM_FREQUENCY = 5000;
 const uint8_t PWM_RESOLUTION = 8;

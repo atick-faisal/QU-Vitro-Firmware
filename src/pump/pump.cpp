@@ -28,7 +28,7 @@
 
 #include "pump.h"
 
-PumpConfig pumpConfig = PumpConfig{SYRINGE, 1000, 100};
+PumpConfig pumpConfig = PumpConfig{PERILSTALTIC, 1000, 100};
 uint16_t pauseBetweenSteps = pumpConfig.flowPeriod / N_FLOW_POINTS;
 
 static uint8_t getCorrectedMotorSpeed(uint8_t targetFlow, uint8_t currentFlow) {
@@ -37,13 +37,7 @@ static uint8_t getCorrectedMotorSpeed(uint8_t targetFlow, uint8_t currentFlow) {
     return correctedSpeed;
 }
 
-void initializePump() {
-    pinMode(MOTOR_PIN, OUTPUT);
-    initializeFlowProfile();
-}
-
 void controlPump() {
-    Serial.println(pumpConfig.chipDiameter);
     for (uint8_t i = 0; i < N_FLOW_POINTS; i++) {
         unsigned long waitUntil = millis() + pauseBetweenSteps;
         measuredFlowRate[i] = getFlowRate(i);

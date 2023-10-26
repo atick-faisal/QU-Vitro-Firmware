@@ -34,7 +34,7 @@ bool readMode = false;
 
 void setup() {
     initializePins();
-    initializePump();
+    initializeFlowProfile();
     initializeFlowSensor();
     initializeSerial();
 }
