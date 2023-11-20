@@ -42,6 +42,9 @@ void blink() {
 
 void initializePins() {
     pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(MOT1_DIR_PIN, OUTPUT);
+    pinMode(MOT1_STEP_PIN, OUTPUT);
+    pinMode(HOME_SW1_PIN, INPUT_PULLUP);
 
 #ifdef PWM_MODE_ESP32
     // Setup PWM for ESP32

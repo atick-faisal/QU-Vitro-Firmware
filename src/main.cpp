@@ -34,6 +34,8 @@ bool readMode = false;
 
 void setup() {
     initializePins();
+    initializeMotors();
+    initializeHomeSwitches();
     initializeFlowProfile();
     initializeFlowSensor();
     initializeSerial();

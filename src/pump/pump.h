@@ -29,6 +29,8 @@
 #ifndef PUMP_H
 #define PUMP_H
 
+#include <AccelStepper.h>
+
 #include "../config/config.h"
 #include "../flow/flow.h"
 #include "../serial/serial.h"
@@ -46,6 +48,8 @@ struct PumpConfig {
     uint16_t chipDiameter;
 };
 
+void initializeMotors();
+void initializeHomeSwitches();
 void controlPump();
 void setPumpConfig(uint8_t pumpType, uint16_t flowPeriod,
                    uint16_t chipDiameter);

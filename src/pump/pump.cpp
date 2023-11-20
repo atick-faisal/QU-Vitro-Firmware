@@ -28,8 +28,16 @@
 
 #include "pump.h"
 
-PumpConfig pumpConfig = PumpConfig{PERILSTALTIC, 1000, 100};
+PumpConfig pumpConfig = PumpConfig{SYRINGE, 3000, 100};
 uint16_t pauseBetweenSteps = pumpConfig.flowPeriod / N_FLOW_POINTS;
+
+AccelStepper Motor1(STEP_MOTOR_TYPE, MOT1_STEP_PIN, MOT1_DIR_PIN);
+
+int8_t switch1State = -1;
+
+void initializeMotors() {
+    Motor1.setMaxSpeed(STEP_MOTOR_MAX_SPEED);
+}
 
 static uint8_t getCorrectedMotorSpeed(uint8_t targetFlow, uint8_t currentFlow) {
     // ... Implement PID control here
@@ -51,7 +59,8 @@ void controlPump() {
             ledcWrite(PWM_CHANNEL, motorSpeed);
 #endif
         } else if (pumpConfig.pumpType == SYRINGE) {
-            // TODO(Implement this)
+            // Serial.println(motorSpeed);
+            Motor1.setSpeed(motorSpeed * switch1State);
         }
 
         // ... Check for serial data
@@ -63,6 +72,7 @@ void controlPump() {
                     return;
                 }
             }
+            Motor1.runSpeed();
             delay(1);
         }
     }
@@ -71,8 +81,22 @@ void controlPump() {
 
 void setPumpConfig(uint8_t pumpType, uint16_t flowPeriod,
                    uint16_t chipDiameter) {
-    pumpConfig.pumpType = pumpType == 0 ? SYRINGE : PERILSTALTIC;
-    pumpConfig.flowPeriod = flowPeriod;
-    pumpConfig.chipDiameter = chipDiameter;
-    pauseBetweenSteps = pumpConfig.flowPeriod / N_FLOW_POINTS;
+    // pumpConfig.pumpType = pumpType == 0 ? SYRINGE : PERILSTALTIC;
+    // pumpConfig.flowPeriod = flowPeriod;
+    // pumpConfig.chipDiameter = chipDiameter;
+    // pauseBetweenSteps = pumpConfig.flowPeriod / N_FLOW_POINTS;
 }
+
+void __homeSwitch1Reached() {
+    switch1State = -1;
+}
+
+void __homeSwitch2Reached() {
+    switch1State = 1;
+}
+
+void initializeHomeSwitches() {
+    attachInterrupt(HOME_SW1_PIN, __homeSwitch1Reached, FALLING);
+    attachInterrupt(HOME_SW2_PIN, __homeSwitch2Reached, FALLING);
+}
+

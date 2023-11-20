@@ -40,6 +40,17 @@ const uint8_t MOTOR_PIN = 10;
 const uint8_t MOTOR_PIN = 16;
 #endif
 
+
+const uint16_t STEP_MOTOR_MAX_SPEED = 10000;
+
+const u_int8_t MOT1_STEP_PIN = 26;
+const u_int8_t MOT1_DIR_PIN = 25;
+
+const u_int8_t HOME_SW1_PIN = 27;
+const u_int8_t HOME_SW2_PIN = 14;
+
+const uint8_t STEP_MOTOR_TYPE = 1;
+
 // ... Buffer size for reading and writing flow profile
 const uint8_t FLOW_BUFFER_SIZE = 255;
 
