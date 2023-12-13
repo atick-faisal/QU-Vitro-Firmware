@@ -40,7 +40,6 @@ const uint8_t MOTOR_PIN = 10;
 const uint8_t MOTOR_PIN = 16;
 #endif
 
-
 const uint16_t STEP_MOTOR_MAX_SPEED = 10000;
 
 const u_int8_t MOT1_STEP_PIN = 26;
